@@ -66,18 +66,18 @@ const seed = async()=> {
     createUser({ username: 'lucy', password: 'l_password', is_admin: false}),
     createUser({ username: 'ethyl', password: '1234', is_admin: true})
   ]);
-  const [foo, bar, bazz] = await Promise.all([
-    createProduct({ name: 'foo' }),
-    createProduct({ name: 'bar' }),
-    createProduct({ name: 'bazz' }),
-    createProduct({ name: 'quq' }),
+  const [apple, google, samsung] = await Promise.all([
+    createProduct({ name: 'apple' }),
+    createProduct({ name: 'google' }),
+    createProduct({ name: 'samsung' }),
+    createProduct({ name: 'motorola' }),
   ]);
   let orders = await fetchOrders(ethyl.id);
   let cart = orders.find(order => order.is_cart);
-  let lineItem = await createLineItem({ order_id: cart.id, product_id: foo.id});
+  let lineItem = await createLineItem({ order_id: cart.id, product_id: apple.id});
   lineItem.quantity++;
   await updateLineItem(lineItem);
-  lineItem = await createLineItem({ order_id: cart.id, product_id: bar.id});
+  lineItem = await createLineItem({ order_id: cart.id, product_id: google.id});
   cart.is_cart = false;
   await updateOrder(cart);
 };
