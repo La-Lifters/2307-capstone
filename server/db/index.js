@@ -40,7 +40,8 @@ const seed = async()=> {
       id UUID PRIMARY KEY,
       created_at TIMESTAMP DEFAULT now(),
       name VARCHAR(100) UNIQUE NOT NULL,
-      price INTEGER NOT NULL
+      price INTEGER NOT NULL,
+      description TEXT
     );
 
     CREATE TABLE orders(
@@ -68,10 +69,10 @@ const seed = async()=> {
     createUser({ username: 'ethyl', password: '1234', is_admin: true})
   ]);
   const [apple, google, samsung] = await Promise.all([
-    createProduct({ name: 'apple', price: 1199 }),
-    createProduct({ name: 'google', price: 1059 }),
-    createProduct({ name: 'samsung', price: 1199 }),
-    createProduct({ name: 'motorola', price: 999 }),
+    createProduct({ name: 'apple', price: 1199, description: 'This is the latest iPhone.' }),
+    createProduct({ name: 'google', price: 1059, description: 'This is the latest Google Pixel phone.' }),
+    createProduct({ name: 'samsung', price: 1199, description: 'This is the latest Samsung Galaxy phone.' }),
+    createProduct({ name: 'motorola', price: 999, description: 'This is the latest version of the Motorola Edge.' }),
   ]);
   let orders = await fetchOrders(ethyl.id);
   let cart = orders.find(order => order.is_cart);

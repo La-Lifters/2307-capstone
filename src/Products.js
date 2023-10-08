@@ -13,6 +13,7 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth})=
               <li key={ product.id }>
                 { product.name }
                 {' '} {'$' + (product.price).toLocaleString("en-US") } {' '}
+                <p>{ product.description }</p>
                 {
                   auth.id ? (
                     cartItem ? <button onClick={ ()=> updateLineItem(cartItem)}>Add Another</button>: <button onClick={ ()=> createLineItem(product)}>Add</button>
