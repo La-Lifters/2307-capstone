@@ -20,9 +20,15 @@ const {
   fetchOrders
 } = require('./cart');
 
+const{
+  createBookmark,
+  fetchBookmarks
+} = require('./bookmarks');
+
 
 const seed = async()=> {
   const SQL = `
+    DROP TABLE IF EXISTS bookmarks;
     DROP TABLE IF EXISTS line_items;
     DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS orders;
@@ -60,6 +66,14 @@ const seed = async()=> {
       CONSTRAINT product_and_order_key UNIQUE(product_id, order_id)
     );
 
+    CREATE TABLE bookmarks(
+      id UUID PRIMARY KEY,
+      product_id UUID REFERENCES products(id) NOT NULL,
+      user_id UUID REFERENCES users(id) NOT NULL,
+      product_name VARCHAR REFERENCES products(name) NOT NULL,
+      CONSTRAINT product_and_user_key UNIQUE(product_id, user_id)
+    );
+
   `;
   await client.query(SQL);
 
@@ -74,6 +88,12 @@ const seed = async()=> {
     createProduct({ name: 'samsung', price: 1199, description: 'This is the latest Samsung Galaxy phone.' }),
     createProduct({ name: 'motorola', price: 999, description: 'This is the latest version of the Motorola Edge.' }),
   ]);
+
+  await Promise.all([
+    createBookmark({ user_id: ethyl.id , product_id: samsung.id , product_name: samsung.name }),
+    createBookmark({ user_id: ethyl.id , product_id: apple.id , product_name: apple.name }),
+  ]);
+
   let orders = await fetchOrders(ethyl.id);
   let cart = orders.find(order => order.is_cart);
   let lineItem = await createLineItem({ order_id: cart.id, product_id: apple.id});
@@ -85,6 +105,8 @@ const seed = async()=> {
 };
 
 module.exports = {
+  createBookmark,
+  fetchBookmarks,
   fetchProducts,
   fetchOrders,
   fetchLineItems,

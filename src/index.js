@@ -5,12 +5,15 @@ import Products from './Products';
 import Orders from './Orders';
 import Cart from './Cart';
 import Login from './Login';
+import Bookmarks from './Bookmarks';
 import api from './api';
+
 
 const App = ()=> {
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [lineItems, setLineItems] = useState([]);
+  const [bookmarks, setBookmarks] = useState([]);
   const [auth, setAuth] = useState({});
 
   const attemptLoginWithToken = async()=> {
@@ -41,6 +44,15 @@ const App = ()=> {
     if(auth.id){
       const fetchData = async()=> {
         await api.fetchLineItems(setLineItems);
+      };
+      fetchData();
+    }
+  }, [auth]);
+
+  useEffect(()=> {
+    if(auth.id){
+      const fetchData = async()=> {
+        await api.fetchBookmarks(setBookmarks);
       };
       fetchData();
     }
@@ -88,12 +100,17 @@ const App = ()=> {
               <Link to='/products'>Products ({ products.length })</Link>
               <Link to='/orders'>Orders ({ orders.filter(order => !order.is_cart).length })</Link>
               <Link to='/cart'>Cart ({ cartCount })</Link>
+              <Link to='/bookmarks'>Bookmarks</Link>
+
               <span>
                 Welcome { auth.username }!
                 <button onClick={ logout }>Logout</button>
               </span>
+              
             </nav>
-            <main>
+            <Routes>
+              <Route path = '/products'
+              element = {
               <Products
                 auth = { auth }
                 products={ products }
@@ -101,19 +118,36 @@ const App = ()=> {
                 createLineItem = { createLineItem }
                 updateLineItem = { updateLineItem }
               />
-              <Cart
+              } />
+
+              <Route path = '/cart'
+              element = {
+                <Cart
                 cart = { cart }
                 lineItems = { lineItems }
                 products = { products }
                 updateOrder = { updateOrder }
                 removeFromCart = { removeFromCart }
               />
+              }/>
+
+              <Route path = '/orders'
+              element = {
               <Orders
                 orders = { orders }
                 products = { products }
                 lineItems = { lineItems }
               />
-            </main>
+              }/>
+
+              <Route path = '/bookmarks'
+              element = {
+                <Bookmarks
+                bookmarks={ bookmarks }
+              />
+              }/>
+
+            </Routes>
             </>
         ):(
           <div>
@@ -124,6 +158,7 @@ const App = ()=> {
               createLineItem = { createLineItem }
               updateLineItem = { updateLineItem }
               auth = { auth }
+              bookmarks = { bookmarks }
             />
           </div>
         )
