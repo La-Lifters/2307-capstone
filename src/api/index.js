@@ -93,7 +93,8 @@ const api = {
   updateLineItem,
   updateOrder,
   removeFromCart,
-  attemptLoginWithToken
+  attemptLoginWithToken,
+  getHeaders
 };
 
 export default api;

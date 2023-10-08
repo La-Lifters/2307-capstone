@@ -128,6 +128,7 @@ const App = ()=> {
                 products = { products }
                 updateOrder = { updateOrder }
                 removeFromCart = { removeFromCart }
+                setLineItems = { setLineItems }
               />
               }/>
 
