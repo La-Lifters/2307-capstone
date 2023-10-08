@@ -10,3 +10,8 @@ form {
 form > * {
   margin: 0.5rem;
 }
+
+nav {
+  display: flex;
+  justify-content: space-around;
+}
