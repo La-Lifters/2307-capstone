@@ -23,6 +23,11 @@ const fetchLineItems = async(setLineItems)=> {
   setLineItems(response.data);
 };
 
+const fetchBookmarks = async(setBookmarks)=> {
+  const response = await axios.get('/api/bookmarks', getHeaders());
+  setBookmarks(response.data);
+};
+
 const createLineItem = async({ product, cart, lineItems, setLineItems })=> {
   const response = await axios.post('/api/lineItems', {
     order_id: cart.id,
@@ -83,6 +88,7 @@ const api = {
   fetchProducts,
   fetchOrders,
   fetchLineItems,
+  fetchBookmarks,
   createLineItem,
   updateLineItem,
   updateOrder,
