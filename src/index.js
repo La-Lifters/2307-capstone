@@ -5,8 +5,8 @@ import Products from './Products';
 import Orders from './Orders';
 import Cart from './Cart';
 import Login from './Login';
-import Bookmarks from './Bookmarks';
 import api from './api';
+import Profile from './Profile';
 
 
 const App = ()=> {
@@ -100,7 +100,7 @@ const App = ()=> {
               <Link to='/products'>Products ({ products.length })</Link>
               <Link to='/orders'>Orders ({ orders.filter(order => !order.is_cart).length })</Link>
               <Link to='/cart'>Cart ({ cartCount })</Link>
-              <Link to='/bookmarks'>Bookmarks</Link>
+              <Link to='/profile'>Profile</Link>
 
               <span>
                 Welcome { auth.username }!
@@ -141,11 +141,12 @@ const App = ()=> {
               />
               }/>
 
-              <Route path = '/bookmarks'
+              <Route path='/profile'
               element = {
-                <Bookmarks
-                bookmarks={ bookmarks }
-              />
+                <Profile
+                auth = { auth }
+                bookmarks = { bookmarks }
+                />
               }/>
 
             </Routes>
