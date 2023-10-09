@@ -7,6 +7,7 @@ import Cart from './Cart';
 import Login from './Login';
 import api from './api';
 import Profile from './Profile';
+import Product from './Product';
 
 
 const App = ()=> {
@@ -148,6 +149,14 @@ const App = ()=> {
                 bookmarks = { bookmarks }
                 />
               }/>
+
+              <Route path = '/product/:id'
+              element = {
+                <Product
+                products = { products }
+                />
+              }
+              />
 
             </Routes>
             </>
