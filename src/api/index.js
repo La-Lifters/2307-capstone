@@ -28,6 +28,17 @@ const fetchBookmarks = async(setBookmarks)=> {
   setBookmarks(response.data);
 };
 
+const createBookmark = async({ product, bookmarks, setBookmarks})=> {
+  console.log(product, setBookmarks, bookmarks)
+  const response = await axios.post('/api/bookmarks', {
+    product_id: product.product.id,
+    user_id : product.auth.id,
+    product_name: product.product.name
+  }, getHeaders());
+  setBookmarks([...bookmarks, response.data]);
+  console.log('DOH');
+};
+
 const createLineItem = async({ product, cart, lineItems, setLineItems })=> {
   const response = await axios.post('/api/lineItems', {
     order_id: cart.id,
@@ -89,6 +100,7 @@ const api = {
   fetchOrders,
   fetchLineItems,
   fetchBookmarks,
+  createBookmark,
   createLineItem,
   updateLineItem,
   updateOrder,
