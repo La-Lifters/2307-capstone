@@ -63,6 +63,8 @@ const createUser = async(user)=> {
   return response.rows[0];
 };
 
+console.log("JWT Secret: ", process.env.JWT);
+
 module.exports = {
   createUser,
   authenticate,

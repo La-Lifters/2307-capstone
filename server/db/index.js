@@ -28,28 +28,21 @@ const{
 
 const seed = async()=> {
   const SQL = `
-    DROP TABLE IF EXISTS bookmarks;
-    DROP TABLE IF EXISTS line_items;
-    DROP TABLE IF EXISTS products;
-    DROP TABLE IF EXISTS orders;
-    DROP TABLE IF EXISTS users;
-    
-    CREATE TABLE wishlists(
-      id UUID PRIMARY KEY,
-      user_id UUID REFERENCES users(id) NOT NULL,
-      product_id UUID REFERENCES products(id) NOT NULL,
-      CONSTRAINT user_and_product_key UNIQUE(user_id, product_id)
-    );
-    
-    CREATE TABLE users(
+  DROP TABLE IF EXISTS bookmarks;
+  DROP TABLE IF EXISTS line_items;
+  DROP TABLE IF EXISTS orders;
+  DROP TABLE IF EXISTS wishlists;
+  DROP TABLE IF EXISTS products;
+  DROP TABLE IF EXISTS users;
+
+            CREATE TABLE users(
       id UUID PRIMARY KEY,
       created_at TIMESTAMP DEFAULT now(),
       username VARCHAR(100) UNIQUE NOT NULL,
       password VARCHAR(100) NOT NULL,
       is_admin BOOLEAN DEFAULT false NOT NULL
     );
-
-    CREATE TABLE products(
+        CREATE TABLE products(
       id UUID PRIMARY KEY,
       created_at TIMESTAMP DEFAULT now(),
       name VARCHAR(100) UNIQUE NOT NULL,
@@ -57,6 +50,13 @@ const seed = async()=> {
       description TEXT
     );
 
+    CREATE TABLE wishlists(
+      id UUID PRIMARY KEY,
+      user_id UUID REFERENCES users(id) NOT NULL,
+      product_id UUID REFERENCES products(id) NOT NULL,
+      CONSTRAINT user_and_product_key UNIQUE(user_id, product_id)
+    );
+  
     CREATE TABLE orders(
       id UUID PRIMARY KEY,
       created_at TIMESTAMP DEFAULT now(),

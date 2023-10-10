@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const getHeaders = ()=> {
+  console.log("Token: ", window.localStorage.getItem('token'));
   return {
     headers: {
       authorization: window.localStorage.getItem('token')
