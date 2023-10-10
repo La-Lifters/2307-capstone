@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 
 
-const Product = ({ products }) => {
+const Product = ({ products, auth, createBookmark }) => {
     const {id} = useParams();
 
     const product = products.find((pro)=>{
@@ -22,6 +22,8 @@ const Product = ({ products }) => {
             Product description:<br/>
             {product.description}
         </p>
+        <hr/>
+        <button id="buy_button">BUY</button> <button id="bookmark_button" onClick={ () =>{ createBookmark({product, auth })}}>BOOKMARK</button>
        
       </div>
     )

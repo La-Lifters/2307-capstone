@@ -64,6 +64,11 @@ const App = ()=> {
     await api.createLineItem({ product, cart, lineItems, setLineItems});
   };
 
+  const createBookmark = async(product) =>{
+    console.log(product)
+    await api.createBookmark({ product, setBookmarks, bookmarks })
+  };
+
   const updateLineItem = async(lineItem)=> {
     await api.updateLineItem({ lineItem, cart, lineItems, setLineItems });
   };
@@ -154,6 +159,8 @@ const App = ()=> {
               element = {
                 <Product
                 products = { products }
+                createBookmark = { createBookmark }
+                auth={ auth }
                 />
               }
               />
