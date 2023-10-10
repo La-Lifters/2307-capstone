@@ -7,5 +7,6 @@ app.use('/', require('./auth'));
 app.use('/orders', require('./orders'));
 app.use('/lineItems', require('./lineItems'));
 app.use('/bookmarks', require('./bookmarks'));
+app.use('/wishlist', require('./wishlist'));
 
 module.exports = app;

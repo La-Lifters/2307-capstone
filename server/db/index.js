@@ -33,7 +33,14 @@ const seed = async()=> {
     DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS orders;
     DROP TABLE IF EXISTS users;
-
+    
+    CREATE TABLE wishlists(
+      id UUID PRIMARY KEY,
+      user_id UUID REFERENCES users(id) NOT NULL,
+      product_id UUID REFERENCES products(id) NOT NULL,
+      CONSTRAINT user_and_product_key UNIQUE(user_id, product_id)
+    );
+    
     CREATE TABLE users(
       id UUID PRIMARY KEY,
       created_at TIMESTAMP DEFAULT now(),
