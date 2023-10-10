@@ -36,6 +36,12 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, setLineI
     }
   };
 
+  const totalPrice = lineItems.filter(lineItem => lineItem.order_id === cart.id)
+    .reduce((total, lineItem) => {
+      const product = products.find(product => product.id === lineItem.product_id) || {};
+      return total + (product.price * lineItem.quantity);
+    }, 0);
+
   return (
     <div>
       <h2>Cart</h2>
@@ -59,6 +65,7 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, setLineI
           })
         }
       </ul>
+      <h3>Total Price: ${totalPrice}</h3> {/* Displaying total price here */}
       {
         lineItems.filter(lineItem => lineItem.order_id === cart.id ).length ? <button onClick={()=> {
           updateOrder({...cart, is_cart: false });
@@ -69,3 +76,4 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, setLineI
 };
 
 export default Cart;
+
