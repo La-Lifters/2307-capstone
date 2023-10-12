@@ -29,6 +29,7 @@ const Registration = ({ register })=> {
 
     return(
       <div>
+        <h2>Create Account</h2>
         { registrationSuccess ? (
           <div>
             <p>Registration successful! Please log in.</p> 
