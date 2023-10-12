@@ -88,6 +88,16 @@ const login = async({ credentials, setAuth })=> {
   attemptLoginWithToken(setAuth);
 }
 
+const register = async (user) => {
+  try {
+    const response = await axios.post('/api/register', user);
+    return response.data;
+  } catch (error) {
+    console.error('Registration error:', error.response);
+    throw error;
+  }
+};
+
 const logout = (setAuth)=> {
   window.localStorage.removeItem('token');
   setAuth({});
@@ -95,6 +105,7 @@ const logout = (setAuth)=> {
 
 const api = {
   login,
+  register,
   logout,
   fetchProducts,
   fetchOrders,
