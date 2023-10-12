@@ -7,6 +7,7 @@ import Cart from './Cart';
 import Login from './Login';
 import api from './api';
 import Profile from './Profile';
+import Registration from './Registration';
 
 
 const App = ()=> {
@@ -87,6 +88,10 @@ const App = ()=> {
     await api.login({ credentials, setAuth });
   }
 
+  const register = async (user) => {
+    await api.register(user);
+  }
+
   const logout = ()=> {
     api.logout(setAuth);
   }
@@ -154,6 +159,7 @@ const App = ()=> {
         ):(
           <div>
             <Login login={ login }/>
+            <Registration register={register} />
             <Products
               products={ products }
               cartItems = { cartItems }

@@ -52,14 +52,14 @@ const authenticate = async(credentials)=> {
 };
 
 const createUser = async(user)=> {
-  if(!user.username.trim() || !user.password.trim()){
-    throw Error('must have username and password');
+  if(!user.username.trim() || !user.email.trim() || !user.password.trim()){
+    throw Error('must have username, email, and password');
   }
   user.password = await bcrypt.hash(user.password, 5);
   const SQL = `
-    INSERT INTO users (id, username, password, is_admin) VALUES($1, $2, $3, $4) RETURNING *
+    INSERT INTO users (id, username, email, password, is_admin) VALUES($1, $2, $3, $4, $5) RETURNING *
   `;
-  const response = await client.query(SQL, [ uuidv4(), user.username, user.password, user.is_admin ]);
+  const response = await client.query(SQL, [ uuidv4(), user.username, user.email, user.password, user.is_admin || false ]);
   return response.rows[0];
 };
 

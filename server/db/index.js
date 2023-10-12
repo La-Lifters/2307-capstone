@@ -38,6 +38,7 @@ const seed = async()=> {
       id UUID PRIMARY KEY,
       created_at TIMESTAMP DEFAULT now(),
       username VARCHAR(100) UNIQUE NOT NULL,
+      email VARCHAR(100) UNIQUE NOT NULL,
       password VARCHAR(100) NOT NULL,
       is_admin BOOLEAN DEFAULT false NOT NULL
     );
@@ -77,11 +78,13 @@ const seed = async()=> {
   `;
   await client.query(SQL);
 
-  const [moe, lucy, ethyl] = await Promise.all([
-    createUser({ username: 'moe', password: 'm_password', is_admin: false}),
-    createUser({ username: 'lucy', password: 'l_password', is_admin: false}),
-    createUser({ username: 'ethyl', password: '1234', is_admin: true})
+  const [moe, lucy, ethyl, batman] = await Promise.all([
+    createUser({ username: 'moe', email: 'moe@email.com', password: '1234', is_admin: false }),
+    createUser({ username: 'lucy', email: 'lucy@email.com', password: '1234', is_admin: false }),
+    createUser({ username: 'ethyl', email: 'ethyl@email.com', password: '1234', is_admin: true }),
+    createUser({ username: 'batman', email: 'batman@batcave.com', password: 'im_batman', is_admin: true }),
   ]);
+
   const [apple, google, samsung] = await Promise.all([
     createProduct({ name: 'apple', price: 1199, description: 'This is the latest iPhone.' }),
     createProduct({ name: 'google', price: 1059, description: 'This is the latest Google Pixel phone.' }),
