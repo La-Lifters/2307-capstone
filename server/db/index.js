@@ -1,4 +1,7 @@
 const client = require('./client');
+const path = require('path');
+const fs = require('fs');
+
 
 const {
   fetchProducts,
@@ -25,6 +28,18 @@ const{
   fetchBookmarks
 } = require('./bookmarks');
 
+const loadImage = (filePath) =>{
+  return new Promise(( resolve, reject )=>{
+    const fullPath = path.join( __dirname, filePath );
+    fs.readFile( fullPath, 'base64', ( err, result )=>{
+      if(err){
+        reject(err);
+      }else{
+        resolve(`data:image/jpeg ; base64, ${result}`);
+      }
+    })
+  })
+}
 
 const seed = async()=> {
   const SQL = `
@@ -48,7 +63,8 @@ const seed = async()=> {
       created_at TIMESTAMP DEFAULT now(),
       name VARCHAR(100) UNIQUE NOT NULL,
       price INTEGER NOT NULL,
-      description TEXT
+      description TEXT,
+      image TEXT
     );
 
     CREATE TABLE orders(
@@ -85,8 +101,10 @@ const seed = async()=> {
     createUser({ username: 'batman', email: 'batman@batcave.com', password: 'im_batman', is_admin: true }),
   ]);
 
+  const iphoneImage = await loadImage('images/iphone15.jpeg');
+
   const [apple, google, samsung] = await Promise.all([
-    createProduct({ name: 'apple', price: 1199, description: 'This is the latest iPhone.' }),
+    createProduct({ name: 'apple', price: 1199, description: 'This is the latest iPhone.', image: iphoneImage }),
     createProduct({ name: 'google', price: 1059, description: 'This is the latest Google Pixel phone.' }),
     createProduct({ name: 'samsung', price: 1199, description: 'This is the latest Samsung Galaxy phone.' }),
     createProduct({ name: 'motorola', price: 999, description: 'This is the latest version of the Motorola Edge.' }),

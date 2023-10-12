@@ -12,6 +12,7 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth})=
             return (
               <li key={ product.id }>
                 <Link to = {`/product/${product.id}`}>{ product.name }</Link>
+                { product.image ? <img src = {product.image}/> : null }
                 {' '} {'$' + (product.price).toLocaleString("en-US") } {' '}
                 <p>{ product.description }</p>
                 {
