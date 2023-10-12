@@ -1,13 +1,22 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const Products = ({ products, cartItems, createLineItem, updateLineItem, auth})=> {
+  const navigate = useNavigate();
+  const { term } = useParams();
+
   return (
     <div>
       <h2>Products</h2>
+      <input 
+      placeholder='search for products' 
+      value={ term || '' } 
+      onChange={ ev => navigate(ev.target.value ? `/products/search/${ev.target.value}` : '/products')} />
       <ul>
         {
-          products.map( product => {
+          products
+          .filter(product => !term || product.name.indexOf(term) !== -1)
+          .map( product => {
             const cartItem = cartItems.find(lineItem => lineItem.product_id === product.id);
             return (
               <li key={ product.id }>

@@ -78,11 +78,10 @@ const seed = async()=> {
   `;
   await client.query(SQL);
 
-  const [moe, lucy, ethyl, batman] = await Promise.all([
+  const [moe, lucy, ethyl] = await Promise.all([
     createUser({ username: 'moe', email: 'moe@email.com', password: '1234', is_admin: false }),
     createUser({ username: 'lucy', email: 'lucy@email.com', password: '1234', is_admin: false }),
     createUser({ username: 'ethyl', email: 'ethyl@email.com', password: '1234', is_admin: true }),
-    createUser({ username: 'batman', email: 'batman@batcave.com', password: 'im_batman', is_admin: true }),
   ]);
 
   const [apple, google, samsung] = await Promise.all([
