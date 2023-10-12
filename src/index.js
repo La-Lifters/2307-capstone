@@ -8,6 +8,7 @@ import Login from './Login';
 import api from './api';
 import Profile from './Profile';
 import Registration from './Registration';
+import Product from './Product';
 
 
 const App = ()=> {
@@ -62,6 +63,11 @@ const App = ()=> {
 
   const createLineItem = async(product)=> {
     await api.createLineItem({ product, cart, lineItems, setLineItems});
+  };
+
+  const createBookmark = async(product) =>{
+    console.log(product)
+    await api.createBookmark({ product, setBookmarks, bookmarks })
   };
 
   const updateLineItem = async(lineItem)=> {
@@ -153,6 +159,16 @@ const App = ()=> {
                 bookmarks = { bookmarks }
                 />
               }/>
+
+              <Route path = '/product/:id'
+              element = {
+                <Product
+                products = { products }
+                createBookmark = { createBookmark }
+                auth={ auth }
+                />
+              }
+              />
 
             </Routes>
             </>

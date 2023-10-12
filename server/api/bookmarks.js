@@ -9,6 +9,7 @@ const {
   
   app.post('/', isLoggedIn, async(req, res, next)=> {
     try {
+      console.log(req.body);
       res.send(await createBookmark({ ...req.body, id: req.params.id}));
     }
     catch(ex){
