@@ -1,9 +1,12 @@
 import React from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
 
-const Products = ({ products, cartItems, createLineItem, updateLineItem, auth})=> {
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import ProductImageEditor from './ImageEditor';
+  
+const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, updateProduct})=> {
   const navigate = useNavigate();
   const { term } = useParams();
+
 
   return (
     <div>
@@ -21,6 +24,7 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth})=
             return (
               <li key={ product.id }>
                 <Link to = {`/product/${product.id}`}>{ product.name }</Link>
+                { product.image ? <img src = {product.image}/> : null }
                 {' '} {'$' + (product.price).toLocaleString("en-US") } {' '}
                 <p>{ product.description }</p>
                 {
@@ -30,7 +34,10 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth})=
                 }
                 {
                   auth.is_admin ? (
+                    <div>
                     <Link to={`/products/${product.id}/edit`}>Edit</Link>
+                    <ProductImageEditor product = { product } updateProduct = { updateProduct }/>
+                    </div>
                   ): null
                 }
               </li>

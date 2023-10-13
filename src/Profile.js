@@ -1,4 +1,5 @@
 import React from "react";
+import Link from 'react-router-dom';
 
 const Profile = ({auth, bookmarks})=>{
     return(
@@ -11,7 +12,7 @@ const Profile = ({auth, bookmarks})=>{
                     bookmarks.map(bookmark =>{
                         return(
                             <li key = { bookmark.id }>
-                                { bookmark.product_name}
+                             { bookmark.product_name}
                             </li>
                         )
                     })
