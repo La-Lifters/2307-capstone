@@ -124,7 +124,18 @@ const App = ()=> {
               
             </nav>
             <Routes>
-              <Route path = '/products'
+            <Route path = '/products'
+              element = {
+              <Products
+                auth = { auth }
+                products={ products }
+                cartItems = { cartItems }
+                createLineItem = { createLineItem }
+                updateLineItem = { updateLineItem }
+              />
+              } />
+
+              <Route path = '/products/search/:term'
               element = {
               <Products
                 auth = { auth }
@@ -181,14 +192,40 @@ const App = ()=> {
           <div>
             <Login login={ login }/>
             <Registration register={register} />
-            <Products
-              products={ products }
-              cartItems = { cartItems }
-              createLineItem = { createLineItem }
-              updateLineItem = { updateLineItem }
-              auth = { auth }
-              bookmarks = { bookmarks }
-            />
+            <Routes>
+              <Route path='/' element={
+                <Products
+                  products={ products }
+                  cartItems = { cartItems }
+                  createLineItem = { createLineItem }
+                  updateLineItem = { updateLineItem }
+                  auth = { auth }
+                  bookmarks = { bookmarks }
+                />
+              } />
+
+              <Route path='/products' element={
+                <Products
+                  products={ products }
+                  cartItems = { cartItems }
+                  createLineItem = { createLineItem }
+                  updateLineItem = { updateLineItem }
+                  auth = { auth }
+                  bookmarks = { bookmarks }
+                />
+              } />
+
+              <Route path='/products/search/:term' element={
+                <Products
+                  products={ products }
+                  cartItems = { cartItems }
+                  createLineItem = { createLineItem }
+                  updateLineItem = { updateLineItem }
+                  auth = { auth }
+                  bookmarks = { bookmarks }
+                />
+              } />
+            </Routes>
           </div>
         )
       }
