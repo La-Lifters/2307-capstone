@@ -74,6 +74,10 @@ const App = ()=> {
     await api.updateLineItem({ lineItem, cart, lineItems, setLineItems });
   };
 
+  const updateProduct = async(product)=> {
+    await api.updateProduct({ product, products, setProducts });
+  };
+
   const updateOrder = async(order)=> {
     await api.updateOrder({ order, setOrders });
   };
@@ -128,6 +132,7 @@ const App = ()=> {
                 cartItems = { cartItems }
                 createLineItem = { createLineItem }
                 updateLineItem = { updateLineItem }
+                updateProduct={ updateProduct }
               />
               } />
 

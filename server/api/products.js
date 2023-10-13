@@ -1,5 +1,6 @@
 const {
   fetchProducts,
+  updateProduct
 } = require('../db');
 
 const express = require('express');
@@ -15,8 +16,8 @@ app.get('/', async(req, res, next)=> {
   }
 });
 
-app.put('/:id', isLoggedIn, isAdmin, (req, res, next)=> {
-  res.send('hello world');
+app.put('/:id', isLoggedIn, isAdmin, async (req, res, next)=> {
+  res.send(await updateProduct({ id: req.params.id, ...req.body }));
 });
 
 

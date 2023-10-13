@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ProductImageEditor from './ImageEditor';
 
-const Products = ({ products, cartItems, createLineItem, updateLineItem, auth})=> {
+const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, updateProduct})=> {
   return (
     <div>
       <h2>Products</h2>
@@ -22,7 +23,10 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth})=
                 }
                 {
                   auth.is_admin ? (
+                    <div>
                     <Link to={`/products/${product.id}/edit`}>Edit</Link>
+                    <ProductImageEditor product = { product } updateProduct = { updateProduct }/>
+                    </div>
                   ): null
                 }
               </li>

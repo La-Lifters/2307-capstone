@@ -53,6 +53,11 @@ const updateLineItem = async({ lineItem, cart, lineItems, setLineItems })=> {
   setLineItems(lineItems.map( lineItem => lineItem.id == response.data.id ? response.data: lineItem));
 };
 
+const updateProduct = async({ product, products, setProducts })=> {
+  const response = await axios.put(`/api/products/${product.id}`, product, getHeaders());
+  setProducts(products.map( product => product.id == response.data.id ? response.data: product));
+};
+
 const updateOrder = async({ order, setOrders })=> {
   await axios.put(`/api/orders/${order.id}`, order, getHeaders());
   const response = await axios.get('/api/orders', getHeaders());
@@ -106,6 +111,7 @@ const api = {
   register,
   logout,
   fetchProducts,
+  updateProduct,
   fetchOrders,
   fetchLineItems,
   fetchBookmarks,

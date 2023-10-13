@@ -5,7 +5,8 @@ const fs = require('fs');
 
 const {
   fetchProducts,
-  createProduct
+  createProduct,
+  updateProduct
 } = require('./products');
 
 const {
@@ -35,7 +36,7 @@ const loadImage = (filePath) =>{
       if(err){
         reject(err);
       }else{
-        resolve(`data:image/jpeg ; base64, ${result}`);
+        resolve(`data:image/jpeg && image/png ; base64, ${result}`);
       }
     })
   })
@@ -102,8 +103,9 @@ const seed = async()=> {
   ]);
 
   const iphoneImage = await loadImage('images/iphone15.jpeg');
+  const pixel8Image = await loadImage('images/google_pixel8.jpeg');
 
-  const [apple, google, samsung] = await Promise.all([
+  let [apple, google, samsung] = await Promise.all([
     createProduct({ name: 'apple', price: 1199, description: 'This is the latest iPhone.', image: iphoneImage }),
     createProduct({ name: 'google', price: 1059, description: 'This is the latest Google Pixel phone.' }),
     createProduct({ name: 'samsung', price: 1199, description: 'This is the latest Samsung Galaxy phone.' }),
@@ -115,6 +117,7 @@ const seed = async()=> {
     createBookmark({ user_id: ethyl.id , product_id: apple.id , product_name: apple.name }),
   ]);
 
+  await updateProduct({...google, image: pixel8Image});
   let orders = await fetchOrders(ethyl.id);
   let cart = orders.find(order => order.is_cart);
   let lineItem = await createLineItem({ order_id: cart.id, product_id: apple.id});
@@ -133,6 +136,7 @@ module.exports = {
   fetchLineItems,
   createLineItem,
   updateLineItem,
+  updateProduct,
   deleteLineItem,
   updateOrder,
   authenticate,
