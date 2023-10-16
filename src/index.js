@@ -82,6 +82,10 @@ const App = ()=> {
     await api.updateOrder({ order, setOrders });
   };
 
+  const updateAuth = (newAuth)=> {
+    setAuth(newAuth);
+  };
+
   const removeFromCart = async(lineItem)=> {
     await api.removeFromCart({ lineItem, lineItems, setLineItems });
   };
@@ -172,6 +176,7 @@ const App = ()=> {
               element = {
                 <Profile
                 auth = { auth }
+                updateAuth = { updateAuth }
                 bookmarks = { bookmarks }
                 />
               }/>

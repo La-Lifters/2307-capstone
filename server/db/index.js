@@ -12,7 +12,9 @@ const {
 const {
   createUser,
   authenticate,
-  findUserByToken
+  findUserByToken,
+  updateProfile,
+  updatePassword
 } = require('./auth');
 
 const {
@@ -140,6 +142,8 @@ module.exports = {
   updateOrder,
   authenticate,
   findUserByToken,
+  updateProfile,
+  updatePassword,
   seed,
   client
 };
