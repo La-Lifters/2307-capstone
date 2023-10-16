@@ -62,3 +62,7 @@ nav {
 #product_link{
   text-decoration: none;
 }
+
+.map{
+  height: 300px;
+}
