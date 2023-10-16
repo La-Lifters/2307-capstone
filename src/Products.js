@@ -15,16 +15,16 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, u
       placeholder='search for products' 
       value={ term || '' } 
       onChange={ ev => navigate(ev.target.value ? `/products/search/${ev.target.value}` : '/products')} />
-      <ul>
+      <ul id = 'products_list'>
         {
           products
           .filter(product => !term || product.name.indexOf(term) !== -1)
           .map( product => {
             const cartItem = cartItems.find(lineItem => lineItem.product_id === product.id);
             return (
-              <li key={ product.id }>
-                <Link to = {`/product/${product.id}`}>{ product.name }</Link>
+              <li id = 'products_li' key={ product.id }>
                 { product.image ? <img src = {product.image}/> : null }
+                <Link id = 'product_link' to = {`/product/${product.id}`}>{ product.name }</Link>
                 {' '} {'$' + (product.price).toLocaleString("en-US") } {' '}
                 <p>{ product.description }</p>
                 {
@@ -34,8 +34,8 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, u
                 }
                 {
                   auth.is_admin ? (
-                    <div>
-                    <Link to={`/products/${product.id}/edit`}>Edit</Link>
+                    <div className='products_admin'>
+                    <Link to={`/products/${product.id}/edit`} >Edit</Link>
                     <ProductImageEditor product = { product } updateProduct = { updateProduct }/>
                     </div>
                   ): null

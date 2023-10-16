@@ -1,3 +1,8 @@
+*{
+  margin: 0;
+}
+
+
 body {
   font-family: verdana;
 }
@@ -22,4 +27,38 @@ nav {
 
 #buy_button {
   justify-self: space-around;
+}
+
+#products_list{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  order: 3;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#products_li{
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.products_admin{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+ 
+#products_li > img{
+  height: 40vh;
+  width: 40vh;
+}
+
+#product_link{
+  text-decoration: none;
 }

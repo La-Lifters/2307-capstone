@@ -173,6 +173,7 @@ const App = ()=> {
                 <Profile
                 auth = { auth }
                 bookmarks = { bookmarks }
+                products = {products}
                 />
               }/>
 
@@ -225,6 +226,16 @@ const App = ()=> {
                   bookmarks = { bookmarks }
                 />
               } />
+
+              <Route path = '/product/:id'
+                element = {
+                <Product
+                products = { products }
+                createBookmark = { createBookmark }
+                auth={ auth }
+                />
+              }
+              />
             </Routes>
           </div>
         )

@@ -1,7 +1,7 @@
 import React from "react";
 import Link from 'react-router-dom';
 
-const Profile = ({auth, bookmarks})=>{
+const Profile = ({auth, bookmarks, products})=>{
     return(
         <div>
             <h2>{auth.username}</h2><br/>
