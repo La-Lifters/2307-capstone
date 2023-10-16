@@ -64,7 +64,9 @@ const seed = async()=> {
       created_at TIMESTAMP DEFAULT now(),
       name VARCHAR(100) UNIQUE NOT NULL,
       price INTEGER NOT NULL,
-      description TEXT,
+      description TEXT, 
+      rating INT,
+      review TEXT,
       image TEXT
     );
 
@@ -105,10 +107,10 @@ const seed = async()=> {
   const pixel8Image = await loadImage('images/google_pixel8.jpeg');
 
   let [apple, google, samsung] = await Promise.all([
-    createProduct({ name: 'apple', price: 1199, description: 'This is the latest iPhone.', image: iphoneImage }),
-    createProduct({ name: 'google', price: 1059, description: 'This is the latest Google Pixel phone.' }),
-    createProduct({ name: 'samsung', price: 1199, description: 'This is the latest Samsung Galaxy phone.' }),
-    createProduct({ name: 'motorola', price: 999, description: 'This is the latest version of the Motorola Edge.' }),
+    createProduct({ name: 'apple', price: 1199, description: 'This is the latest iPhone.', rating: 4, review: 'I do not like that the charger comes separately, but it is a quality phone',image: iphoneImage }),
+    createProduct({ name: 'google', price: 1059, description: 'This is the latest Google Pixel phone.', rating: 1, review: 'Phone is not user friendly. Do not buy.' }),
+    createProduct({ name: 'samsung', price: 1199, description: 'This is the latest Samsung Galaxy phone.', rating: 3, review: 'I have used this phone for years. It has slow down issues and bad storage, but it gets the job done'}),
+    createProduct({ name: 'motorola', price: 999, description: 'This is the latest version of the Motorola Edge.', rating: 5, review: 'This is a good product. Better than competing brands. I highly recommend this phone' }),
   ]);
 
   await Promise.all([
