@@ -12,7 +12,9 @@ const {
 const {
   createUser,
   authenticate,
-  findUserByToken
+  findUserByToken,
+  updateProfile,
+  updatePassword
 } = require('./auth');
 
 const {
@@ -64,7 +66,9 @@ const seed = async()=> {
       created_at TIMESTAMP DEFAULT now(),
       name VARCHAR(100) UNIQUE NOT NULL,
       price INTEGER NOT NULL,
-      description TEXT,
+      description TEXT, 
+      rating INT,
+      review TEXT,
       image TEXT
     );
 
@@ -131,6 +135,7 @@ const seed = async()=> {
     createProduct({ name: 'SideKick2 ', price: 200 , description: 'Nunc aliquet feugiat dui, ut congue lorem luctus at.', image: sidekick_ }),
     createProduct({ name: 'Miami Vice', price: 10 , description: 'Quisque non quam rhoncus, scelerisque elit a, mollis mi. ', image: brick_ }),
     createProduct({ name: 'Magic Conch', price: 1  , description: 'The Conch knows all ', image: conch_ })
+
   ]);
 
   await Promise.all([
@@ -162,6 +167,8 @@ module.exports = {
   updateOrder,
   authenticate,
   findUserByToken,
+  updateProfile,
+  updatePassword,
   seed,
   client
 };

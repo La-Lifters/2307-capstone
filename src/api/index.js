@@ -64,6 +64,26 @@ const updateOrder = async({ order, setOrders })=> {
   setOrders(response.data);
 };
 
+const updateProfile = async(username, email)=> {
+  try {
+    await axios.put('/api/me/update', { username, email }, getHeaders());
+    console.log('Profile updated successfully');
+  } catch (error) {
+    console.error('Profile update failed:', error);
+    throw error;
+  }
+};
+
+const updatePassword = async (newPassword) => {
+  try {
+    await axios.put('/api/me/updatePassword', { newPassword }, getHeaders());
+    console.log('Password updated successfully');
+  } catch (error) {
+    console.error('Password update failed:', error);
+    throw error;
+  }
+};
+
 const removeFromCart = async({ lineItem, lineItems, setLineItems })=> {
   const response = await axios.delete(`/api/lineItems/${lineItem.id}`, getHeaders());
   setLineItems(lineItems.filter( _lineItem => _lineItem.id !== lineItem.id));
@@ -119,6 +139,8 @@ const api = {
   createLineItem,
   updateLineItem,
   updateOrder,
+  updateProfile,
+  updatePassword,
   removeFromCart,
   attemptLoginWithToken,
   getHeaders
