@@ -8,7 +8,7 @@ const findUserByToken = async(token) => {
   try {
     const payload = await jwt.verify(token, process.env.JWT);
     const SQL = `
-      SELECT id, username, is_admin
+      SELECT id, username, email, is_admin
       FROM users
       WHERE id = $1
     `;
@@ -57,14 +57,42 @@ const createUser = async(user)=> {
   }
   user.password = await bcrypt.hash(user.password, 5);
   const SQL = `
-    INSERT INTO users (id, username, email, password, is_admin) VALUES($1, $2, $3, $4, $5) RETURNING *
+    INSERT INTO users (id, username, email, password, is_admin) 
+    VALUES($1, $2, $3, $4, $5) 
+    RETURNING *
   `;
   const response = await client.query(SQL, [ uuidv4(), user.username, user.email, user.password, user.is_admin || false ]);
+  return response.rows[0];
+};
+
+const updateProfile = async(userId, newData)=> {  
+  const SQL = `
+    UPDATE users
+    SET username = $1, email = $2
+    WHERE id = $3
+    RETURNING *
+  `;
+  const response = await client.query(SQL, [ newData.username, newData.email, userId ]);
+  return response.rows[0];
+};
+
+const updatePassword = async(userId, newPassword)=> {
+  const hashedPassword = await bcrypt.hash(newPassword, 5);
+  
+  const SQL = `
+    UPDATE users
+    SET password = $1
+    WHERE id = $2
+    RETURNING *
+  `;
+  const response = await client.query(SQL, [ hashedPassword, userId ]);
   return response.rows[0];
 };
 
 module.exports = {
   createUser,
   authenticate,
-  findUserByToken
+  findUserByToken,
+  updateProfile,
+  updatePassword
 };
