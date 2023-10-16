@@ -1,5 +1,6 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams} from "react-router-dom";
+
 
 
 const Product = ({ products, auth, createBookmark }) => {
@@ -20,6 +21,9 @@ const Product = ({ products, auth, createBookmark }) => {
         <h3>{product.name}</h3>
         <hr/>
         <p>
+            {
+                product.image ? <img src = { product.image} /> : null 
+            }
             Product description:<br/>
             {product.description}
         </p>

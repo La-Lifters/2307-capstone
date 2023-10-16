@@ -9,6 +9,7 @@ import api from './api';
 import Profile from './Profile';
 import Registration from './Registration';
 import Product from './Product';
+import Contact from './contact';
 
 
 const App = ()=> {
@@ -120,6 +121,7 @@ const App = ()=> {
               <Link to='/orders'>Orders ({ orders.filter(order => !order.is_cart).length })</Link>
               <Link to='/cart'>Cart ({ cartCount })</Link>
               <Link to='/profile'>Profile</Link>
+              <Link to='/contact'>Contact</Link>
 
               <span>
                 Welcome { auth.username }!
@@ -178,6 +180,7 @@ const App = ()=> {
                 auth = { auth }
                 updateAuth = { updateAuth }
                 bookmarks = { bookmarks }
+                products = {products}
                 />
               }/>
 
@@ -191,6 +194,11 @@ const App = ()=> {
               }
               />
 
+              <Route path='/contact'
+              element = {
+                <Contact/>
+              }
+              />
             </Routes>
             </>
         ):(
@@ -230,6 +238,16 @@ const App = ()=> {
                   bookmarks = { bookmarks }
                 />
               } />
+
+              <Route path = '/product/:id'
+                element = {
+                <Product
+                products = { products }
+                createBookmark = { createBookmark }
+                auth={ auth }
+                />
+              }
+              />
             </Routes>
           </div>
         )

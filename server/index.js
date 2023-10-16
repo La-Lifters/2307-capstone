@@ -1,3 +1,8 @@
+try{
+  require('../env');
+}catch(ex){
+  console.log(' if not displaying add env.js to root && set process.env.GOOGLE_API && npm i ejs');
+}
 const {
   seed,
   client,

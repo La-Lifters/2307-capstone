@@ -105,14 +105,37 @@ const seed = async()=> {
     createUser({ username: 'ethyl', email: 'ethyl@email.com', password: '1234', is_admin: true }),
   ]);
 
-  const iphoneImage = await loadImage('images/iphone15.jpeg');
-  const pixel8Image = await loadImage('images/google_pixel8.jpeg');
 
-  let [apple, google, samsung] = await Promise.all([
-    createProduct({ name: 'apple', price: 1199, description: 'This is the latest iPhone.', rating: 4, review: 'I do not like that the charger comes separately, but it is a quality phone',image: iphoneImage }),
-    createProduct({ name: 'google', price: 1059, description: 'This is the latest Google Pixel phone.', rating: 1, review: 'Phone is not user friendly. Do not buy.' }),
-    createProduct({ name: 'samsung', price: 1199, description: 'This is the latest Samsung Galaxy phone.', rating: 3, review: 'I have used this phone for years. It has slow down issues and bad storage, but it gets the job done'}),
-    createProduct({ name: 'motorola', price: 999, description: 'This is the latest version of the Motorola Edge.', rating: 5, review: 'This is a good product. Better than competing brands. I highly recommend this phone' }),
+  const [iphoneImage, pixel8Image, razrImage,galaxy_flip, iphone14, galaxy_fold, galaxy_ultra , nokia_, xp3_, sidekick_, brick_, conch_] = await Promise.all([
+    loadImage('images/iphone15.png'),
+    loadImage('images/google_pixel8.png'),
+    loadImage('images/razr.png'),
+    loadImage('images/flip.png'),
+    loadImage('images/iphone14.png'),
+    loadImage('images/galaxy_fold.png'),
+    loadImage('images/galaxy_ultra.png'),
+    loadImage('images/_nokia.jpeg'),
+    loadImage('images/xp3.png'),
+    loadImage('images/sidekick.png'),
+    loadImage('images/brick.jpeg'),
+    loadImage('images/conch.jpeg')
+  ]);
+  
+
+  let [apple, google, samsung, razr, iphone14_, fold, ultra, nokia, xp3, sidekick, brick, conch] = await Promise.all([
+    createProduct({ name: 'apple', price: 1199, description: 'This is the latest iPhone.', image: iphoneImage }),
+    createProduct({ name: 'google', price: 1059, description: 'This is the latest Google Pixel phone.' }),
+    createProduct({ name: 'samsung', price: 1199, description: 'This is the latest Samsung Galaxy phone.', image: galaxy_flip }),
+    createProduct({ name: 'motorola', price: 999, description: 'This is the latest version of the Motorola Edge.', image: razrImage }),
+    createProduct({ name: 'iPhone 14 ', price: 1000 , description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ', image: iphone14 }),
+    createProduct({ name: 'Galaxy Fold ', price: 1111 , description: 'Etiam sed facilisis quam. ', image: galaxy_fold}),
+    createProduct({ name: 'Galaxy Ultra ', price: 1259 , description: 'Quisque a massa lacinia, condimentum nisl id, ultrices nisi. ', image: galaxy_ultra }),
+    createProduct({ name: 'Nokia 1100 ', price: 75 , description: ' If you know you know', image: nokia_ }),
+    createProduct({ name: 'XP3 ', price: 100 , description: 'Sed dignissim mauris in nisl convallis posuere. ', image: xp3_ }),
+    createProduct({ name: 'SideKick2 ', price: 200 , description: 'Nunc aliquet feugiat dui, ut congue lorem luctus at.', image: sidekick_ }),
+    createProduct({ name: 'Miami Vice', price: 10 , description: 'Quisque non quam rhoncus, scelerisque elit a, mollis mi. ', image: brick_ }),
+    createProduct({ name: 'Magic Conch', price: 1  , description: 'The Conch knows all ', image: conch_ })
+
   ]);
 
   await Promise.all([
