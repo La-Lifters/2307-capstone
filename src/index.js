@@ -9,7 +9,7 @@ import api from './api';
 import Profile from './Profile';
 import Registration from './Registration';
 import Product from './Product';
-import Contact from './contact';
+import Contact from './Contact';
 
 
 const App = ()=> {
