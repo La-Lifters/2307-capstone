@@ -8,7 +8,7 @@ import Login from './Login';
 import api from './api';
 import Profile from './Profile';
 import Product from './Product';
-import Wishlist from './wishlist';
+
 
 
 const App = ()=> {
@@ -103,7 +103,6 @@ const App = ()=> {
               <Link to='/orders'>Orders ({ orders.filter(order => !order.is_cart).length })</Link>
               <Link to='/cart'>Cart ({ cartCount })</Link>
               <Link to='/profile'>Profile</Link>
-              <Link to='/wishlist'>Wishlist</Link>
               <span>
                 Welcome { auth.username }!
                 <button onClick={ logout }>Logout</button>
@@ -111,8 +110,6 @@ const App = ()=> {
               
             </nav>
             <Routes>
-
-            <Route path='/wishlist' element={<Wishlist auth={auth} />} />
 
               <Route path = '/products'
               element = {

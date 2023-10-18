@@ -1,16 +1,9 @@
 import React from 'react';
+
 import { Link } from 'react-router-dom';
 
 const Products = ({ products, cartItems, createLineItem, updateLineItem, auth})=> {
 
-  const addToWishlist = async (productId) => {
-    try {
-      await axios.post('/api/wishlist', { userId: auth.id, productId });
-      // Optionally update UI
-    } catch (err) {
-      console.error(err);
-    }
-  };
   
   return (
     <div>
@@ -32,11 +25,6 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth})=
                 {
                   auth.is_admin ? (
                     <Link to={`/products/${product.id}/edit`}>Edit</Link>
-                  ) : null
-                }
-                {
-                  auth.id ? (
-                    <button onClick={() => addToWishlist(product.id)}>Add to Wishlist</button>
                   ) : null
                 }
               </li>
