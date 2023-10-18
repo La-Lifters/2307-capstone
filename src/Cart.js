@@ -3,6 +3,7 @@ import axios from 'axios';
 import api from './api';
 
 const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, setLineItems })=> {
+  let cartTotal = 0;
 
   const increaseQuantity = async(lineItem)=> {
     const newQuantity = lineItem.quantity + 1;
@@ -43,6 +44,7 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, setLineI
         {
           lineItems.filter(lineItem=> lineItem.order_id === cart.id).map( lineItem => {
             const product = products.find(product => product.id === lineItem.product_id) || {};
+            cartTotal += product.price * lineItem.quantity;
             return (
               <li key={ lineItem.id }>
                 { product.name }
@@ -59,6 +61,7 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, setLineI
           })
         }
       </ul>
+      <p>Total: ${ cartTotal.toLocaleString("en-US") }</p>
       {
         lineItems.filter(lineItem => lineItem.order_id === cart.id ).length ? <button onClick={()=> {
           updateOrder({...cart, is_cart: false });
