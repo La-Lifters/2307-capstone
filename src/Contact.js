@@ -17,10 +17,31 @@ const Contact = ({ addresses, createAddress }) =>{
 
     const el = useRef();
 
+
+    useEffect(()=> {
+        const options = {
+          fields: [
+            'formatted_address',
+            'geometry'
+          ]
+        };
+        const autocomplete = new google.maps.places.Autocomplete(al.current, options);
+        autocomplete.addListener('place_changed', async()=> {
+          const place = autocomplete.getPlace();
+          const address = { data: place };
+          await createAddress(address); 
+          al.current.value = '';
+        });
+    
+      }, []);
+    const al = useRef();
+    
+
     const fake =()=>{
         setEmail('');
         setSubject('');
     }
+
 
     return(
         <div>
@@ -47,8 +68,8 @@ const Contact = ({ addresses, createAddress }) =>{
 
             <div  className = 'map' ref={ el } ></div>
             <div>
-                <h2>Addresses</h2>
-                <input ref={ el } />
+                <h2>Your Addresses</h2>
+                <input ref={ al } />
                 <ul>
                     {
                         addresses.map( address => {
