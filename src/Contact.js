@@ -37,7 +37,8 @@ const Contact = ({ addresses, createAddress }) =>{
     const al = useRef();
     
 
-    const fake =()=>{
+    const fake =(ev)=>{
+        ev.preventDefault();
         setEmail('');
         setSubject('');
     }
