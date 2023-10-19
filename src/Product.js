@@ -3,7 +3,7 @@ import { useParams} from "react-router-dom";
 
 
 
-const Product = ({ products, auth, createBookmark }) => {
+const Product = ({ products, auth, createBookmark, createLineItem }) => {
     const {id} = useParams();
 
     const product = products.find((pro)=>{
@@ -33,8 +33,8 @@ const Product = ({ products, auth, createBookmark }) => {
         <p>{product.rating} Stars</p>
         <p>{product.review}</p>
         <hr/>
-        <button id="buy_button">BUY</button> <button id="bookmark_button" onClick={ () =>{ createBookmark({product, auth })}}>BOOKMARK</button>
-       
+        <button id='add_button' onClick={ ()=> createLineItem(product)}>Add</button> 
+        <button id="bookmark_button" onClick={ () =>{ createBookmark({product, auth })}}>BOOKMARK</button>
       </div>
     )
 

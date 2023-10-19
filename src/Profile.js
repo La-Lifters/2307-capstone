@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Link from 'react-router-dom';
 import api from "./api";
 
-const Profile = ({auth, updateAuth, bookmarks})=>{
+const Profile = ({auth, updateAuth, bookmarks,})=>{
     const [editUsername, setEditUsername] = useState(false);
     const [editEmail, setEditEmail] = useState(false);
     const [editPassword, setEditPassword] = useState(false);
@@ -37,7 +37,7 @@ const Profile = ({auth, updateAuth, bookmarks})=>{
       };
 
     return(
-        <div>
+        <div id="edit-page">
             <h3>Username: { auth.username } {' '}
             { !editUsername && (
                  <button onClick={ ()=> setEditUsername(true) }>Edit</button>
@@ -93,6 +93,7 @@ const Profile = ({auth, updateAuth, bookmarks})=>{
                     { passwordStatus === 'error' && <div>Password update failed.</div> }
                 </>
             )}
+            <div>
             <hr/>
             <h4>Bookmarked Items</h4>
             <ul>
@@ -106,6 +107,8 @@ const Profile = ({auth, updateAuth, bookmarks})=>{
                     })
                 }
             </ul>
+            </div>
+            
         </div>
     )
 };
