@@ -2,7 +2,7 @@ import React, { useState, } from 'react';
 import Registration from './Registration';
 import { useNavigate } from 'react-router-dom';
 
-const Login = ({ login })=> {
+const Login = ({ login, register })=> {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -41,7 +41,7 @@ const Login = ({ login })=> {
       </form>
       <br/>
       <br/>
-      <Registration/>
+      <Registration register={register}/>
     </div>
   );
 }

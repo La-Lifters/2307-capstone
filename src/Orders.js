@@ -31,7 +31,7 @@ const Orders = ({ orders, products, lineItems })=> {
                         </li>
                         <li key={ lineItem.id }>
                           { product ? product.name: '' }
-                          { lineItem ? lineItem.quantity : ''}
+                          {' '}({ lineItem ? lineItem.quantity : ''})
                         </li>
                         </div>
                       );

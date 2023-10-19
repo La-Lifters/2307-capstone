@@ -251,7 +251,9 @@ const App = ()=> {
 
 <Route path='/login' element={
   <Login 
-  login={ login }/>
+  login={ login }
+  register={ register }
+  />
 }/>
 
 <Route path='/register' element={
