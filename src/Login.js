@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, } from 'react';
+import Registration from './Registration';
+import { useNavigate } from 'react-router-dom';
 
 const Login = ({ login })=> {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate=useNavigate();
 
   const _login = async(ev)=> {
     ev.preventDefault();
     setError('');
     try {
       await login({ username, password });
+      navigate('/products');
+     
     }
     catch(ex){
       console.log(ex.response.data.message);
@@ -17,7 +22,7 @@ const Login = ({ login })=> {
     }
   }
   return (
-    <div>
+    <div className='login-form'>
       <h2>Login</h2>
       <h2>{ error ? error : ''}</h2>
       <form onSubmit={ _login }>
@@ -34,6 +39,9 @@ const Login = ({ login })=> {
         />
         <button disabled={!username || !password}>Login</button>
       </form>
+      <br/>
+      <br/>
+      <Registration/>
     </div>
   );
 }

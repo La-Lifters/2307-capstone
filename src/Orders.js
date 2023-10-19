@@ -2,7 +2,7 @@ import React from 'react';
 
 const Orders = ({ orders, products, lineItems })=> {
   return (
-    <div>
+    <div  id='orders-page'>
       <h2>Orders</h2>
       <ul>
         {
@@ -16,9 +16,15 @@ const Orders = ({ orders, products, lineItems })=> {
                     orderLineItems.map( lineItem => {
                       const product = products.find(product => product.id === lineItem.product_id);
                       return (
+                        <div>
+                        <li key={lineItem.id}>
+                          {product.image ? <img src={product.image}/>:null}
+                        </li>
                         <li key={ lineItem.id }>
                           { product ? product.name: '' }
+                          { lineItem ? lineItem.quantity : ''}
                         </li>
+                        </div>
                       );
                     })
                   }

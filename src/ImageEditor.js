@@ -15,7 +15,7 @@ const ProductImageEditor = ({ product, updateProduct }) =>{
     },[])
     return(
         <div>
-            <input type='file' ref={ el } />
+            <input id='choose_file' type='file' ref={ el } />
         </div>
     )
 
