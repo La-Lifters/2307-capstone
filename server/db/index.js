@@ -31,6 +31,12 @@ const{
   fetchBookmarks
 } = require('./bookmarks');
 
+const {
+  createAddress,
+  fetchAddresses
+} = require('./address');
+
+
 const loadImage = (filePath) =>{
   return new Promise(( resolve, reject )=>{
     const fullPath = path.join( __dirname, filePath );
@@ -46,6 +52,7 @@ const loadImage = (filePath) =>{
 
 const seed = async()=> {
   const SQL = `
+    DROP TABLE IF EXISTS addresses;
     DROP TABLE IF EXISTS bookmarks;
     DROP TABLE IF EXISTS line_items;
     DROP TABLE IF EXISTS products;
@@ -96,6 +103,13 @@ const seed = async()=> {
       CONSTRAINT product_and_user_key UNIQUE(product_id, user_id)
     );
 
+    CREATE TABLE addresses(
+      id UUID PRIMARY KEY,
+      created_at TIMESTAMP DEFAULT now(),
+      data JSON DEFAULT '{}',
+      user_id UUID REFERENCES users(id) NOT NULL
+    );
+
   `;
   await client.query(SQL);
 
@@ -105,6 +119,7 @@ const seed = async()=> {
     createUser({ username: 'ethyl', email: 'ethyl@email.com', password: '1234', is_admin: true }),
   ]);
 
+  await createAddress({ user_id: ethyl.id, data: { formatted_address: 'Atlantic Ocean'}});
 
   const [iphoneImage, pixel8Image, razrImage,galaxy_flip, iphone14, galaxy_fold, galaxy_ultra , nokia_, xp3_, sidekick_, brick_, conch_] = await Promise.all([
     loadImage('images/iphone15.png'),
@@ -156,6 +171,8 @@ const seed = async()=> {
 module.exports = {
   createBookmark,
   fetchBookmarks,
+  fetchAddresses,
+  createAddress,
   fetchProducts,
   fetchOrders,
   fetchLineItems,
