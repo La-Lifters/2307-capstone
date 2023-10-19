@@ -31,6 +31,12 @@ const{
   fetchBookmarks
 } = require('./bookmarks');
 
+const {
+  createAddress,
+  fetchAddresses
+} = require('./address');
+
+
 const loadImage = (filePath) =>{
   return new Promise(( resolve, reject )=>{
     const fullPath = path.join( __dirname, filePath );
@@ -46,6 +52,7 @@ const loadImage = (filePath) =>{
 
 const seed = async()=> {
   const SQL = `
+    DROP TABLE IF EXISTS addresses;
     DROP TABLE IF EXISTS bookmarks;
     DROP TABLE IF EXISTS line_items;
     DROP TABLE IF EXISTS products;
@@ -96,6 +103,13 @@ const seed = async()=> {
       CONSTRAINT product_and_user_key UNIQUE(product_id, user_id)
     );
 
+    CREATE TABLE addresses(
+      id UUID PRIMARY KEY,
+      created_at TIMESTAMP DEFAULT now(),
+      data JSON DEFAULT '{}',
+      user_id UUID REFERENCES users(id) NOT NULL
+    );
+
   `;
   await client.query(SQL);
 
@@ -105,6 +119,7 @@ const seed = async()=> {
     createUser({ username: 'ethyl', email: 'ethyl@email.com', password: '1234', is_admin: true }),
   ]);
 
+  await createAddress({ user_id: ethyl.id, data: { formatted_address: 'Atlantic Ocean'}});
 
   const [iphoneImage, pixel8Image, razrImage,galaxy_flip, iphone14, galaxy_fold, galaxy_ultra , nokia_, xp3_, sidekick_, brick_, conch_, nokia2780_, oneplus11_, zenfone_, tcl_, lightphone_, iphone_se, google7_, edge_, nord_, a5_, iphone12_,razr1_] = await Promise.all([
     loadImage('images/iphone15.png'),
@@ -132,7 +147,6 @@ const seed = async()=> {
     loadImage('images/iphone-12.png'),
     loadImage('images/razr1.png')
   ]);
-  
 
   let [apple, google, samsung, razr, iphone14_, fold, ultra, nokia, xp3, sidekick, brick, conch, nokia2780] = await Promise.all([
     createProduct({ name: 'apple', price: 1199, description: 'Etiam dignissim elit non leo bibendum mattis. Etiam arcu lacus, pulvinar quis molestie ac, finibus at nunc. Nullam aliquam pharetra leo, non tristique tellus egestas quis. Ut ex neque, mollis in tempus id, ultrices quis magna. Etiam elementum hendrerit ligula nec commodo. Pellentesque dolor libero, scelerisque quis commodo ut, porta consectetur est. Duis euismod sagittis efficitur. Etiam rhoncus turpis venenatis massa malesuada, in pretium orci cursus. Phasellus eget justo in urna consectetur suscipit. In ut dolor ex. Vestibulum tempor feugiat pretium. Vivamus pretium sapien est, ut auctor ante pharetra eu. Maecenas at rutrum eros. Aenean eu ipsum ipsum. Sed semper mollis ante. Fusce aliquet quis nisl id luctus.', rating: 3, review:'loreipsum' ,image: iphoneImage }),
@@ -182,6 +196,8 @@ const seed = async()=> {
 module.exports = {
   createBookmark,
   fetchBookmarks,
+  fetchAddresses,
+  createAddress,
   fetchProducts,
   fetchOrders,
   fetchLineItems,

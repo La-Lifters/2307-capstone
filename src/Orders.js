@@ -8,9 +8,18 @@ const Orders = ({ orders, products, lineItems })=> {
         {
           orders.filter(order => !order.is_cart).map( order => {
             const orderLineItems = lineItems.filter(lineItem => lineItem.order_id === order.id);
+
+            const orderTotal = orderLineItems.reduce((total, lineItem) => {
+              const product = products.find(product => product.id === lineItem.product_id);
+              if (product) {
+                return total + product.price * lineItem.quantity;
+              }
+              return total;
+            }, 0);
             return (
               <li key={ order.id }>
-                ({ new Date(order.created_at).toLocaleString() })
+                (Order total: ${ orderTotal.toLocaleString('en-US') }, {new Date(order.created_at).toLocaleString() })
+                
                 <ul>
                   {
                     orderLineItems.map( lineItem => {

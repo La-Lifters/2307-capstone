@@ -25,6 +25,7 @@ const App = ()=> {
   const [lineItems, setLineItems] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
   const [menu,setMenu] = useState([]);
+  const [addresses, setAddresses] = useState([]);
   const [auth, setAuth] = useState({});
 
   const attemptLoginWithToken = async()=> {
@@ -69,9 +70,21 @@ const App = ()=> {
     }
   }, [auth]);
 
+  useEffect(() => {
+    if(auth.id){
+      const fetchData = async() => {
+        await api.fetchAddresses(setAddresses);
+      };
+      fetchData();
+    }
+  }, [auth]);
 
   const createLineItem = async(product)=> {
     await api.createLineItem({ product, cart, lineItems, setLineItems});
+  };
+
+  const createAddress = async(address) => {
+    await api.createAddress({ address, setAddresses });
   };
 
   const createBookmark = async(product) =>{
@@ -205,7 +218,7 @@ const App = ()=> {
 
               <Route path='/contact'
               element = {
-                <Contact/>
+                <Contact createAddress={ createAddress } addresses={ addresses } />
               }
               />
             </Routes>

@@ -1,7 +1,8 @@
 
 import React, {useRef, useEffect, useState} from "react";
 
-const Contact = ({}) =>{
+
+const Contact = ({ addresses, createAddress }) =>{
     const [email,setEmail]= useState('');
     const [subject,setSubject] = useState('');
 
@@ -13,7 +14,6 @@ const Contact = ({}) =>{
           mapTypeControl: false,
         });
     },[]);
-
 
     const el = useRef();
 
@@ -44,10 +44,26 @@ const Contact = ({}) =>{
                     <button id= 'send-button' disabled={!email || !subject}>SEND</button>
                 </form>
             </div>
-         <div  className = 'map' ref={ el }></div>
-         </div>
-        
+
+            <div  className = 'map' ref={ el } ></div>
+            <div>
+                <h2>Addresses</h2>
+                <input ref={ el } />
+                <ul>
+                    {
+                        addresses.map( address => {
+                            return (
+                                <li key={ address.id }>
+                                    { address.data.formatted_address }
+                                </li>
+                            );
+                        })
+                    }
+                </ul>
+            </div>
+        </div>
+
     )
 };
-
+  
 export default Contact;
