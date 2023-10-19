@@ -28,6 +28,16 @@ const fetchBookmarks = async(setBookmarks)=> {
   setBookmarks(response.data);
 };
 
+const fetchAddresses = async(setAddresses) => {
+  const response = await axios.get('/api/addresses', getHeaders());
+  setAddresses(response.data);
+};
+
+const createAddress = async({ address, setAddresses}) => {
+  const response = await axios.post('/api/addresses', address, getHeaders());
+  await fetchAddresses(setAddresses)
+};
+
 const createBookmark = async({ product, bookmarks, setBookmarks})=> {
   const response = await axios.post('/api/bookmarks', {
     product_id: product.product.id,
@@ -135,6 +145,8 @@ const api = {
   fetchOrders,
   fetchLineItems,
   fetchBookmarks,
+  fetchAddresses,
+  createAddress,
   createBookmark,
   createLineItem,
   updateLineItem,
