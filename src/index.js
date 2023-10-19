@@ -10,6 +10,13 @@ import Profile from './Profile';
 import Registration from './Registration';
 import Product from './Product';
 import Contact from './Contact';
+import {FaShoppingCart, FaInstagram, FaTwitter, FaFacebookSquare, FaGithub, FaYoutube} from 'react-icons/fa';
+
+
+
+
+
+
 
 
 const App = ()=> {
@@ -17,6 +24,7 @@ const App = ()=> {
   const [orders, setOrders] = useState([]);
   const [lineItems, setLineItems] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
+  const [menu,setMenu] = useState([]);
   const [addresses, setAddresses] = useState([]);
   const [auth, setAuth] = useState({});
 
@@ -128,20 +136,21 @@ const App = ()=> {
     <div>
       {
         auth.id ? (
-          <>
+          <div>
             <nav>
-              <Link to='/products'>Products ({ products.length })</Link>
-              <Link to='/orders'>Orders ({ orders.filter(order => !order.is_cart).length })</Link>
-              <Link to='/cart'>Cart ({ cartCount })</Link>
-              <Link to='/profile'>Profile</Link>
-              <Link to='/contact'>Contact</Link>
+
+              <Link className='Nav-link' to='/products' onClick={()=>{setMenu('products')}}>Products ({ products.length }){menu === 'products' ? <hr/> :<></>}</Link>
+              <Link className='Nav-link' to='/orders' onClick={()=>{setMenu('orders')}}>Orders ({ orders.filter(order => !order.is_cart).length }){menu === 'orders' ? <hr/> :<></>}</Link>
+              <Link className='Nav-link' to='/cart' onClick={()=>{setMenu('cart')}}><FaShoppingCart style={{width:25, height:25}}/>({ cartCount }){menu === 'cart' ? <hr/> :<></>}</Link>
+              <Link className='Nav-link' to='/profile' onClick={()=>{setMenu('profile')}}>Profile{menu === 'profile' ? <hr/> :<></>}</Link>
+              <Link className='Nav-link' to='/contact' onClick={()=>{setMenu('contact')}}>Contact{menu === 'contact' ? <hr/> :<></>}</Link>
 
               <span>
-                Welcome { auth.username }!
-                <button onClick={ logout }>Logout</button>
+                Welcome { auth.username}!<br/>
+                <button id='logout' onClick={ logout }>Logout</button>
               </span>
-              
             </nav>
+            <body>
             <Routes>
             <Route path = '/products'
               element = {
@@ -213,55 +222,106 @@ const App = ()=> {
               }
               />
             </Routes>
-            </>
+            </body>
+            <footer>
+              <span className='footer-txt'>
+                <p>Follow us at: </p>
+              </span>
+              <div className='footer-links'>
+              <Link className='footer-icon' to={'https://www.instagram.com/'}><FaInstagram style={{height:50, width:50}}/></Link>
+              <Link className='footer-icon' to={'https://www.twitter.com'}><FaTwitter style={{height:50, width:50}}/></Link>
+              <Link className='footer-icon' to={'https://www.facebook.com'}><FaFacebookSquare style={{height:50, width:50}}/></Link>
+              <Link className='footer-icon' to={'https://www.github.com'}><FaGithub style={{height:50,width:50}}/></Link>
+              <Link className='footer-icon' to={'https://www.youtube.com'}><FaYoutube style={{height:50,width:50}}/></Link>
+              </div>
+            </footer>
+            
+          </div>
         ):(
           <div>
-            <Login login={ login }/>
-            <Registration register={register} />
+
+            <nav>
+            <Link className='Nav-link' to='/products'onClick={()=>{setMenu('products')}}>Products ({ products.length }){menu === 'products' ? <hr/> :<></>}</Link>
+            <Link className='Nav-link' to='/login' onClick={()=>{setMenu('login')}}>Login {menu === 'login' ? <hr/> : <></>}</Link>
+            <Link className='Nav-link' to='/contact' onClick={()=>{setMenu('contact')}}>Contact{menu === 'contact' ? <hr/> :<></>}</Link>
+
+            </nav>
+            <body>
             <Routes>
-              <Route path='/' element={
-                <Products
-                  products={ products }
-                  cartItems = { cartItems }
-                  createLineItem = { createLineItem }
-                  updateLineItem = { updateLineItem }
-                  auth = { auth }
-                  bookmarks = { bookmarks }
-                />
-              } />
 
-              <Route path='/products' element={
-                <Products
-                  products={ products }
-                  cartItems = { cartItems }
-                  createLineItem = { createLineItem }
-                  updateLineItem = { updateLineItem }
-                  auth = { auth }
-                  bookmarks = { bookmarks }
-                />
-              } />
+<Route path='/login' element={
+  <Login 
+  login={ login }/>
+}/>
 
-              <Route path='/products/search/:term' element={
-                <Products
-                  products={ products }
-                  cartItems = { cartItems }
-                  createLineItem = { createLineItem }
-                  updateLineItem = { updateLineItem }
-                  auth = { auth }
-                  bookmarks = { bookmarks }
-                />
-              } />
+<Route path='/register' element={
+  <Registration
+  register={register}/>
+}/>
 
-              <Route path = '/product/:id'
-                element = {
-                <Product
-                products = { products }
-                createBookmark = { createBookmark }
-                auth={ auth }
-                />
-              }
-              />
-            </Routes>
+
+  <Route path='/' element={
+    <Products
+      products={ products }
+      cartItems = { cartItems }
+      createLineItem = { createLineItem }
+      updateLineItem = { updateLineItem }
+      auth = { auth }
+      bookmarks = { bookmarks }
+    />
+  } />
+
+  <Route path='/products' element={
+    <Products
+      products={ products }
+      cartItems = { cartItems }
+      createLineItem = { createLineItem }
+      updateLineItem = { updateLineItem }
+      auth = { auth }
+      bookmarks = { bookmarks }
+    />
+  } />
+
+  <Route path='/products/search/:term' element={
+    <Products
+      products={ products }
+      cartItems = { cartItems }
+      createLineItem = { createLineItem }
+      updateLineItem = { updateLineItem }
+      auth = { auth }
+      bookmarks = { bookmarks }
+    />
+  } />
+
+  <Route path = '/product/:id'
+    element = {
+    <Product
+    products = { products }
+    createBookmark = { createBookmark }
+    auth={ auth }
+    />
+  }
+  />
+
+  <Route path='/contact'
+     element = {
+      <Contact/>
+      }
+   />
+</Routes>
+            </body>
+            <footer>
+              <span className='footer-txt'>
+                <p>Follow us at: </p>
+              </span>
+              <div className='footer-links'>
+              <Link className='footer-icon' to={'https://www.instagram.com/'}><FaInstagram style={{height:50, width:50}}/></Link>
+              <Link className='footer-icon' to={'https://www.twitter.com'}><FaTwitter style={{height:50, width:50}}/></Link>
+              <Link className='footer-icon' to={'https://www.facebook.com'}><FaFacebookSquare style={{height:50, width:50}}/></Link>
+              <Link className='footer-icon' to={'https://www.github.com'}><FaGithub style={{height:50,width:50}}/></Link>
+              <Link className='footer-icon' to={'https://www.youtube.com'}><FaYoutube style={{height:50,width:50}}/></Link>
+              </div>
+            </footer>
           </div>
         )
       }
